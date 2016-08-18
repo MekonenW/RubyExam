@@ -1,0 +1,48 @@
+<style>#one, #two{width: 400px; display: inline-block; vertical-align: top;border: 2px solid black; margin: 20px; padding: 10px} .error{color: red}</style>
+<div id ='one'>
+	<h2>Register</h2>
+	<form action='/users' method='post'>
+		<input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
+		<p>First_name: </p><input type='text' name='user[first_name]'>
+		<p>Last_name: </p><input type='text' name='user[last_name]'>
+		<p>Email: </p><input type='email' name='user[email]'>
+		<p>Location</p>
+		<P><input type='text' name='user[location]'>  
+			<select name='user[state]'>
+			<option value='WA'>WA</option>
+			<option value='MA'>MA</option>
+			<option value='TX'>TX</option>
+			<option value='CA'>CA</option>
+			</select>
+		</P>
+		<p>Password:</p> <input type='password' name='user[password]'>
+		<p>*Password should be at least 8 characters</p>
+		<p>Confirm PW: </p><input type='password' name='user[password_confirmation]'>
+		<div class= 'error'>
+			<% if flash[:errors] %>
+				<% flash[:errors].each do |error| %>
+					<p> <%= error %> </p> 
+				<% end %>
+			<% end %>
+		</div>
+
+		<input type='submit' value='Register'>
+
+
+	</form>
+
+</div>
+
+<div id='two'>
+	<h2>Log In</h2>
+	<form action='/sessions' method='post'>
+		<input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
+		<p><input type='email' name='email' placeholder='Email'></p>
+		<p><input type='password' name='password' placeholder='Password'></p>
+		<div class='error'><%= flash[:login_error]%></div>
+		<p><input type='submit' value='Log In'></p>
+
+
+	</form>
+
+</div>

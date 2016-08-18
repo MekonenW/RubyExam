@@ -1,0 +1,93 @@
+<h3><a href="/sessions" data-method='delete'>Logout</a></h3>
+<style>table{width: 800px}.error{color: red}</style>
+<h1>Welcome <%= @user.first_name %></h1>
+<p>Here are some of the events at your State</p>
+<table border='1'>
+	<tr>
+		<th>name</th>
+		<th>Date</th>
+		<th>Location</th>
+		<th>Host</th>
+		<th>Action/status</th>
+	</tr>
+	<% @events.each do |event| %>
+	<tr>
+		<td><a href="/events/<%= event.id %>"> <%=event.name%></a></td>
+		<td><%=event.date%></td>
+		<td><%=event.location%></td>
+		<td><%=event.user.first_name%> </td>
+
+		<td>
+			  
+			<form action='/events/<%= event.id %>' method='post'>
+				<input type='hidden' name="authenticity_token" value="<%= form_authenticity_token %>">
+				<input type='hidden' name='_method' value='delete'>
+				<button type='submit'>Delete</button>
+
+			</form>
+			 
+		</td>
+
+	</tr>
+	<% end %>
+
+</table>
+<p>Here are some of the events at other State</p>
+<table border='1'>
+	<tr>
+		<th>name</th>
+		<th>Date</th>
+		<th>Location</th>
+		<th>State</th>
+		<th>Action/status</th>
+	</tr>
+	<% @events.each do |event| %>
+	<tr>
+		<td><%=event.name%></td>
+		<td><%=event.date%></td>
+		<td><%=event.location%></td>
+		<td><%=event.location%> </td>
+
+
+
+		<td>
+			<a href="/events/<%= event.id%>">Join</a> 
+			 
+		</td>
+
+	</tr>
+	<% end %>
+</table>
+<h3>Add Event</h3>
+<div class= 'error'>
+	<% if flash[:errors] %>
+		<% flash[:errors].each do |error| %>
+			<p> <%= error %> </p> 
+		<% end %>
+	<% end %>
+</div>
+<div>
+	<form action='/events' method='post'>
+		<input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
+		<p>Name</p>
+		<input type='text' name='event[name]'>
+		<p>Date</p>
+		<input type='date' name='event[date]'>
+		<p>Location</p>
+		<P><input type='text' name='event[location]'>  
+
+			<select name='event[state]'>
+			<option value='WA'>WA</option>
+			<option value='MA'>MA</option>
+			<option value='TX'>TX</option>
+			<option value='CA'>CA</option>
+			</select>
+		</p>
+		<input type= 'submit' value='Add Event'>
+
+	</form>
+
+</div>
+
+
+
